@@ -65,6 +65,8 @@ class Git {
 
 	async clone() {
 		core.debug(`Cloning ${ this.repo.fullName } into ${ this.workingDir }`)
+		core.info(`IS_INSTALLATION_TOKEN ${IS_INSTALLATION_TOKEN}`)
+		core.info(`GITHUB_TOKEN ${GITHUB_TOKEN}`)
 		core.info(`git branch ${this.gitUrl}`)
 		core.info(`git branch ${this.gitUrl.split('')}`)
 		core.info(`git branch ${JSON.stringify(this.gitUrl.split(''), null, 2)}`)

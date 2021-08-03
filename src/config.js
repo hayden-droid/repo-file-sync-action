@@ -15,9 +15,10 @@ try {
 			key: 'GH_PAT',
 			required: true
 		}),
-		GITHUB_TOKEN: getInput({
+		IS_INSTALLATION_TOKEN: getInput({
 			key: 'IS_INSTALLATION_TOKEN',
-			required: true
+			required: false,
+			default: true,
 		}),
 		GIT_EMAIL: getInput({
 			key: 'GIT_EMAIL'
