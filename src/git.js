@@ -130,7 +130,7 @@ class Git {
 	}
 
 	async commit(msg) {
-		let message = msg !== undefined ? msg : `${ COMMIT_PREFIX } Synced file(s) with ${ GITHUB_REPOSITORY }`
+		let message = msg !== undefined ? msg : `DI Repo Maintainer Bot Update`
 		if (COMMIT_BODY) {
 			message += `\n\n${ COMMIT_BODY }`
 		}
@@ -191,13 +191,16 @@ class Git {
 
 	async createOrUpdatePr(changedFiles) {
 		const body = dedent(`
+			This is an automated PR to sync automation GHA workflows, CODEOWNERS, Dependabot settings, etc for Repos owned by the Roblox Data community.
+			See [Confluence Page](https://confluence.rbx.com/x/ikXIDQ)
+
 			Synced local file(s) with [${ GITHUB_REPOSITORY }](https://github.com/${ GITHUB_REPOSITORY }).
 
 			${ changedFiles }
 
 			---
 
-			This PR was created automatically by the [repo-file-sync-action](https://github.com/BetaHuhn/repo-file-sync-action) workflow run [#${ process.env.GITHUB_RUN_ID || 0 }](https://github.com/${ GITHUB_REPOSITORY }/actions/runs/${ process.env.GITHUB_RUN_ID || 0 })
+			This PR was created automatically by the [repo-file-sync-action](https://github.com/Roblox/repo-file-sync-action) workflow run [#${ process.env.GITHUB_RUN_ID || 0 }](https://rbx.github.com/${ GITHUB_REPOSITORY }/actions/runs/${ process.env.GITHUB_RUN_ID || 0 })
 		`)
 
 		if (this.existingPr) {
