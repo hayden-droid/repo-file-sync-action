@@ -16669,6 +16669,10 @@ try {
 			key: 'GH_PAT',
 			required: true
 		}),
+		GITHUB_TOKEN: getInput({
+			key: 'IS_INSTALLATION_TOKEN',
+			required: true
+		}),
 		GIT_EMAIL: getInput({
 			key: 'GIT_EMAIL'
 		}),
@@ -16878,6 +16882,7 @@ const path = __nccwpck_require__(5622)
 
 const {
 	GITHUB_TOKEN,
+	IS_INSTALLATION_TOKEN,
 	GIT_USERNAME,
 	GIT_EMAIL,
 	TMP_DIR,
@@ -16927,7 +16932,7 @@ class Git {
 		// Set values to current repo
 		this.repo = repo
 		this.workingDir = path.join(TMP_DIR, repo.uniqueName)
-		this.gitUrl = `https://${ GITHUB_TOKEN }@${ repo.fullName }.git`
+		this.gitUrl = `https://${IS_INSTALLATION_TOKEN ? 'x-access-token:' : ''}${ GITHUB_TOKEN }@${ repo.fullName }.git`
 
 		await this.clone()
 		await this.setIdentity()
@@ -16936,6 +16941,9 @@ class Git {
 
 	async clone() {
 		core.debug(`Cloning ${ this.repo.fullName } into ${ this.workingDir }`)
+		core.info(`git branch ${this.gitUrl}`)
+		core.info(`git branch ${this.gitUrl.split('')}`)
+		core.info(`git branch ${JSON.stringify(this.gitUrl.split(''), null, 2)}`)
 
 		return execCmd(
 			`git clone --depth 1 ${ this.repo.branch !== 'default' ? '--branch "' + this.repo.branch + '"' : '' } ${ this.gitUrl } ${ this.workingDir }`
@@ -17252,7 +17260,7 @@ module.exports = eval("require")("encoding");
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("assert");;
+module.exports = require("assert");
 
 /***/ }),
 
@@ -17260,7 +17268,7 @@ module.exports = require("assert");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("child_process");;
+module.exports = require("child_process");
 
 /***/ }),
 
@@ -17268,7 +17276,7 @@ module.exports = require("child_process");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("constants");;
+module.exports = require("constants");
 
 /***/ }),
 
@@ -17276,7 +17284,7 @@ module.exports = require("constants");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("events");;
+module.exports = require("events");
 
 /***/ }),
 
@@ -17284,7 +17292,7 @@ module.exports = require("events");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("fs");;
+module.exports = require("fs");
 
 /***/ }),
 
@@ -17292,7 +17300,7 @@ module.exports = require("fs");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("http");;
+module.exports = require("http");
 
 /***/ }),
 
@@ -17300,7 +17308,7 @@ module.exports = require("http");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("https");;
+module.exports = require("https");
 
 /***/ }),
 
@@ -17308,7 +17316,7 @@ module.exports = require("https");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("net");;
+module.exports = require("net");
 
 /***/ }),
 
@@ -17316,7 +17324,7 @@ module.exports = require("net");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("os");;
+module.exports = require("os");
 
 /***/ }),
 
@@ -17324,7 +17332,7 @@ module.exports = require("os");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("path");;
+module.exports = require("path");
 
 /***/ }),
 
@@ -17332,7 +17340,7 @@ module.exports = require("path");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("stream");;
+module.exports = require("stream");
 
 /***/ }),
 
@@ -17340,7 +17348,7 @@ module.exports = require("stream");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("tls");;
+module.exports = require("tls");
 
 /***/ }),
 
@@ -17348,7 +17356,7 @@ module.exports = require("tls");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("url");;
+module.exports = require("url");
 
 /***/ }),
 
@@ -17356,7 +17364,7 @@ module.exports = require("url");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("util");;
+module.exports = require("util");
 
 /***/ }),
 
@@ -17364,7 +17372,7 @@ module.exports = require("util");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("zlib");;
+module.exports = require("zlib");
 
 /***/ })
 
@@ -17403,7 +17411,9 @@ module.exports = require("zlib");;
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
