@@ -65,6 +65,9 @@ class Git {
 
 	async clone() {
 		core.debug(`Cloning ${ this.repo.fullName } into ${ this.workingDir }`)
+		core.info(`git branch ${this.gitUrl}`)
+		core.info(`git branch ${this.gitUrl.split('')}`)
+		core.info(`git branch ${JSON.stringify(this.gitUrl.split(''), null, 2)}`)
 
 		return execCmd(
 			`git clone --depth 1 ${ this.repo.branch !== 'default' ? '--branch "' + this.repo.branch + '"' : '' } ${ this.gitUrl } ${ this.workingDir }`
